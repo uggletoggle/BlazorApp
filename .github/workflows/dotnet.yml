@@ -27,3 +27,12 @@ jobs:
     
     - name: Test
       run: dotnet test -c Release --no-build --verbosity normal --filter "Category!=LongRunning"
+    
+    - name: Executing remote command
+      uses: uggletoggle/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.SSHKEY }}
+        script: ls

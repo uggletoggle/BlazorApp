@@ -40,5 +40,6 @@ jobs:
           systemctl --user stop blazorapp.service
           rm -rf BlazorApp
           git clone https://github.com/uggletoggle/BlazorApp
+          cd BlazorApp/
           dotnet publish -c Release
           systemctl --user start blazorapp.service

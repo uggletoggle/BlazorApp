@@ -1,5 +1,92 @@
 ﻿@page "/"
+@using Syncfusion.Blazor.Charts
+@using System.Collections.ObjectModel
 
 <PageTitle>My Shop</PageTitle>
 
-<ProductList />
+@*<ProductList />*@
+
+    <SfChart @ref="liveChart" Title="Inflation - Consumer Price" Width="100%">
+        <ChartPrimaryXAxis IntervalType="IntervalType.Years" LabelFormat="yyyy"  ValueType="Syncfusion.Blazor.Charts.ValueType.DateTime">
+        </ChartPrimaryXAxis>
+	    <ChartSeriesCollection>
+            <ChartSeries DataSource="@ConsumerReports" XName="XValue" YName="YValue" Type="ChartSeriesType.Line">
+            </ChartSeries>
+            <ChartSeriesAnimation Enable="false"></ChartSeriesAnimation>
+
+        </ChartSeriesCollection>
+    </SfChart>
+ 
+    <SfChart>
+        <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category"></ChartPrimaryXAxis>
+        <ChartSeriesCollection>
+            <ChartSeries DataSource="@Sales" XName="Month" YName="SalesValue" Type="ChartSeriesType.Column">
+            </ChartSeries>
+        </ChartSeriesCollection>
+    </SfChart>
+
+
+@code {
+    public int seed = 2011;
+    public Random randGen = new Random();
+    private SfChart liveChart;
+
+
+    protected async override Task OnInitializedAsync()
+    {
+
+        await Task.Run( async () =>
+    {
+       while(true)
+       {
+           var rand = randGen.Next(1,100);
+           await Task.Delay(500);
+           seed++;
+           ConsumerReports.Add(new ChartData { XValue = new DateTime(seed + 1, 01, 01), YValue = rand });
+
+           await liveChart.Refresh(false);
+
+           if(ConsumerReports.Count > 1)
+           {
+               ConsumerReports.RemoveAt(0);
+           }
+       }
+    });
+
+    }
+
+    public class SalesInfo
+    {
+        public string Month { get; set;}
+        public double SalesValue { get; set;}
+    }
+    public List<SalesInfo> Sales = new List<SalesInfo>
+    {
+        new SalesInfo { Month = "Jan", SalesValue = 35 },
+        new SalesInfo { Month = "Feb", SalesValue = 28 },
+        new SalesInfo { Month = "Mar", SalesValue = 34 },
+        new SalesInfo { Month = "Apr", SalesValue = 32 },
+        new SalesInfo { Month = "May", SalesValue = 40 },
+        new SalesInfo { Month = "Jun", SalesValue = 32 },
+        new SalesInfo { Month = "Jul", SalesValue = 35 }
+    };
+
+    public class ChartData
+    {
+        public DateTime XValue { get; set; }
+        public double YValue { get; set; }
+    }
+
+    public ObservableCollection<ChartData> ConsumerReports = new ObservableCollection<ChartData>()
+    {
+        new ChartData { XValue = new DateTime(2002, 01, 01), YValue = 21 },
+        new ChartData { XValue = new DateTime(2003, 01, 01), YValue = 41 },
+        new ChartData { XValue = new DateTime(2004, 01, 01), YValue = 32 },
+        new ChartData { XValue = new DateTime(2005, 01, 01), YValue = 40 },
+        new ChartData { XValue = new DateTime(2006, 01, 01), YValue = 20 },
+        new ChartData { XValue = new DateTime(2007, 01, 01), YValue = 45 },
+        new ChartData { XValue = new DateTime(2008, 01, 01), YValue = 20 },
+        new ChartData { XValue = new DateTime(2009, 01, 01), YValue = 45 },
+        new ChartData { XValue = new DateTime(2010, 01, 01), YValue = 45 }
+    };
+}

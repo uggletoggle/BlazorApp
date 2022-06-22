@@ -1,9 +1,25 @@
 global using BlazorEcommerce.Shared;
+global using Microsoft.EntityFrameworkCore;
+using BlazorEcommerce.Server.Data;
 using Microsoft.AspNetCore.ResponseCompression;
+using Syncfusion.Blazor;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<AppDbContext>(opt =>
+{
+    opt.UseInMemoryDatabase("ProductDB");
+});
+
+builder.Services.AddServerSideBlazor();
+
+using (var scope = builder.Services.BuildServiceProvider().CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    context.Database.EnsureCreated();
+}
+
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();

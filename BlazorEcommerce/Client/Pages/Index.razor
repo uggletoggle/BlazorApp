@@ -12,7 +12,7 @@
         <div class="col-6">
             <div class="card">
                 <div class="card-body">
-                    <SfChart @ref="liveChart" Title="Compresores - Tiempo Real" Width="100%">
+                    <SfChart @ref="liveChart" Title="Compresores - Tiempo Real" Height="300px" Width="100%">
                         <ChartPrimaryXAxis IntervalType="IntervalType.Years" LabelFormat="yyyy" ValueType="Syncfusion.Blazor.Charts.ValueType.DateTime">
                         </ChartPrimaryXAxis>
                         <ChartSeriesCollection>
@@ -30,7 +30,7 @@
             <div class="card">
                 <div class="card-body">
 
-                    <SfChart Title="Compresores - Valor Promedio x Mes">
+                    <SfChart Title="Compresores - Valor Promedio x Mes" Height="300px">
                         <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category"></ChartPrimaryXAxis>
                         <ChartSeriesCollection>
                             <ChartSeries DataSource="@Sales" XName="Month" YName="SalesValue" Type="ChartSeriesType.Column">
@@ -51,7 +51,7 @@
         <div class="card">
             <div class="card-body">
 
-            <SfChart Title="Compresores - Valor Promedio x Mes">
+            <SfChart Title="Compresores - Valor Promedio x Mes" Height="300px"> 
                 <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category"></ChartPrimaryXAxis>
                 <ChartSeriesCollection>
                     <ChartSeries DataSource="@Sales" XName="Month" YName="SalesValue" Type="ChartSeriesType.Column">
@@ -64,7 +64,7 @@
          <div class="col-6">
             <div class="card">
                 <div class="card-body">
-                     <SfChart @ref="liveChart" Title="Inflation - Consumer Price" Width="100%">
+                     <SfChart @ref="liveChart" Title="Inflation - Consumer Price" Height="300px" Width="100%">
                         <ChartPrimaryXAxis IntervalType="IntervalType.Years" LabelFormat="yyyy" ValueType="Syncfusion.Blazor.Charts.ValueType.DateTime">
                         </ChartPrimaryXAxis>
                         <ChartSeriesCollection>

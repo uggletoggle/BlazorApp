@@ -6,25 +6,80 @@
 
 @*<ProductList />*@
 
-    <SfChart @ref="liveChart" Title="Inflation - Consumer Price" Width="100%">
-        <ChartPrimaryXAxis IntervalType="IntervalType.Years" LabelFormat="yyyy"  ValueType="Syncfusion.Blazor.Charts.ValueType.DateTime">
-        </ChartPrimaryXAxis>
-	    <ChartSeriesCollection>
-            <ChartSeries DataSource="@ConsumerReports" XName="XValue" YName="YValue" Type="ChartSeriesType.Line">
-            </ChartSeries>
-            <ChartSeriesAnimation Enable="false"></ChartSeriesAnimation>
+<div class="container">
 
-        </ChartSeriesCollection>
-    </SfChart>
- 
-    <SfChart>
-        <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category"></ChartPrimaryXAxis>
-        <ChartSeriesCollection>
-            <ChartSeries DataSource="@Sales" XName="Month" YName="SalesValue" Type="ChartSeriesType.Column">
-            </ChartSeries>
-        </ChartSeriesCollection>
-    </SfChart>
+    <div class="row">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    <SfChart @ref="liveChart" Title="Compresores - Tiempo Real" Width="100%">
+                        <ChartPrimaryXAxis IntervalType="IntervalType.Years" LabelFormat="yyyy" ValueType="Syncfusion.Blazor.Charts.ValueType.DateTime">
+                        </ChartPrimaryXAxis>
+                        <ChartSeriesCollection>
+                            <ChartSeries DataSource="@ConsumerReports" XName="XValue" YName="YValue" Type="ChartSeriesType.Line">
+                            </ChartSeries>
+                            <ChartSeriesAnimation Enable="false"></ChartSeriesAnimation>
 
+                        </ChartSeriesCollection>
+                    </SfChart>
+                </div>
+            </div>
+        </div>
+       
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+
+                    <SfChart Title="Compresores - Valor Promedio x Mes">
+                        <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category"></ChartPrimaryXAxis>
+                        <ChartSeriesCollection>
+                            <ChartSeries DataSource="@Sales" XName="Month" YName="SalesValue" Type="ChartSeriesType.Column">
+                            </ChartSeries>
+                        </ChartSeriesCollection>
+                    </SfChart>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+
+        <div class="col-6">
+
+        <div class="card">
+            <div class="card-body">
+
+            <SfChart Title="Compresores - Valor Promedio x Mes">
+                <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category"></ChartPrimaryXAxis>
+                <ChartSeriesCollection>
+                    <ChartSeries DataSource="@Sales" XName="Month" YName="SalesValue" Type="ChartSeriesType.Column">
+                    </ChartSeries>
+                </ChartSeriesCollection>
+            </SfChart>
+            </div>
+        </div>
+        </div>
+         <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                     <SfChart @ref="liveChart" Title="Inflation - Consumer Price" Width="100%">
+                        <ChartPrimaryXAxis IntervalType="IntervalType.Years" LabelFormat="yyyy" ValueType="Syncfusion.Blazor.Charts.ValueType.DateTime">
+                        </ChartPrimaryXAxis>
+                        <ChartSeriesCollection>
+                            <ChartSeries DataSource="@ConsumerReports" XName="XValue" YName="YValue" Type="ChartSeriesType.Line">
+                            </ChartSeries>
+                            <ChartSeriesAnimation Enable="false"></ChartSeriesAnimation>
+
+                        </ChartSeriesCollection>
+                    </SfChart>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 @code {
     public int seed = 2011;
@@ -35,30 +90,30 @@
     protected async override Task OnInitializedAsync()
     {
 
-        await Task.Run( async () =>
-    {
-       while(true)
+        await Task.Run(async () =>
        {
-           var rand = randGen.Next(1,100);
+       while (true)
+       {
+           var rand = randGen.Next(1, 100);
            await Task.Delay(500);
            seed++;
            ConsumerReports.Add(new ChartData { XValue = new DateTime(seed + 1, 01, 01), YValue = rand });
 
            await liveChart.Refresh(false);
 
-           if(ConsumerReports.Count > 1)
+           if (ConsumerReports.Count > 1)
            {
                ConsumerReports.RemoveAt(0);
            }
        }
-    });
+       });
 
     }
 
     public class SalesInfo
     {
-        public string Month { get; set;}
-        public double SalesValue { get; set;}
+        public string Month { get; set; }
+        public double SalesValue { get; set; }
     }
     public List<SalesInfo> Sales = new List<SalesInfo>
     {
